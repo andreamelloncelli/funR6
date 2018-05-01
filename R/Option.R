@@ -33,6 +33,7 @@ Some   <- R6::R6Class(classname = "Some",
 												value = NULL,
 												initialize = function(value) {
 													self$value = value
+													lockEnvironment(self, bindings = TRUE)
 												},
 												map = function(f) {
 													Some$new(value = f(self$value))

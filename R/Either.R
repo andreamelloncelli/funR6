@@ -3,6 +3,9 @@
 
 Either <- R6::R6Class("Either",
 											public = list(
+												initialize = function() {
+													lockEnvironment(self, bindings = TRUE)
+												},
 												lift = function(f) {
 													function(this) this$map(f)
 												})
@@ -16,29 +19,22 @@ Left <- R6::R6Class("Left",
 										 	value = NULL,
 										 	initialize = function(value = NULL) {
 										 		self$value = value
+										 		lockEnvironment(self, bindings = TRUE)
 										 	},
 										 	map = function(f) {
-												Left$new()
+												Left$new(value = self$value)
 											},
 											flatMap = function(f){
-												Left$new()
+												Left$new(value = self$value)
 											},
 											fold = function(f, g) {
-												f()
+												f(self$value)
 											},
 											ap = function(fab) {
 												Left$new()
 											})
 )
-# setMethod("map",
-# 					signature("Left", "function"),
-# 					function(this, f) {
-# 						return(Left(value = f(this@value)))
-# 					})
-# setMethod(f = "fold",
-# 					signature("Left", "function", "function"),
-# 					function(this, f, g) {f(this@value)})
-# # Right -------------------------------------------------------------------
+# Right -------------------------------------------------------------------
 
 Right <- R6::R6Class("Right",
 										 inherit = Either,
@@ -46,15 +42,11 @@ Right <- R6::R6Class("Right",
 										 	value = NULL,
 										 	initialize = function(value) {
 										 		self$value = value
+										 		lockEnvironment(self, bindings = TRUE)
 										 	},
 										 	map = function(f) {
 										 		Right$new(value = f(self$value))
 										 	},
-										 	# setMethod("map",
-										 	# 					signature("Right", "function"),
-										 	# 					function(this, f) {
-										 	# 						return(Right(value = f(this@value)))
-										 	# 					})
 										 	flatMap = function(f) {
 										 		f(self$value)
 										 	},
@@ -65,7 +57,3 @@ Right <- R6::R6Class("Right",
 										 		fab$map(function(f) f(self$value))
 										 	})
 )
-#
-# setMethod(f = "fold",
-# 					signature("Right", "function", "function"),
-# 					function(this, f, g) {g(this@value)})
