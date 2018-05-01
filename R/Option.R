@@ -31,7 +31,9 @@ Some   <- R6::R6Class(classname = "Some",
 											inherit = Option,
 											public = list(
 												value = NULL,
-												initialize = function(value) {self$value = value},
+												initialize = function(value) {
+													self$value = value
+												},
 												map = function(f) {
 													Some$new(value = f(self$value))
 												},

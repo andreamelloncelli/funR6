@@ -13,11 +13,6 @@ inverse_Option <- function(x) {
 	if (x == 0) return(None$new())
 	Some$new(value = 1/x)}
 
-inverse_Either <- function(x) {
-	if (x == 0) return(Left(value = "Division by 0"))
-	Right(value = 1/x)
-}
-#
 test_that("Option map, flatMap, lift", {
 	expect_equal(s$map(inverse), Some$new(value = 0.5))
   expect_equal(s$flatMap(inverse_Option), Some$new(value = 0.5))
