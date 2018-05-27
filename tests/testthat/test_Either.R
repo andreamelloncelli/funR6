@@ -19,7 +19,6 @@ inverse_Either <- function(x) {
 }
 # #
 test_that("Either map, flatMap, lift", {
-	expect_equal(1, 2)
 	expect_equal(r$map(inverse), Right$new(value = 0.5))
   expect_equal(r$flatMap(inverse_Either), Right$new(value = 0.5))
   expect_equal(r$lift(inverse)(r), Right$new(value = 0.5))
