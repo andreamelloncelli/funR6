@@ -38,10 +38,31 @@ test_that("Option fold method", {
 })
 
 test_that("Option$ap", {
+	# Option<A -> B>
 	fab <- Some$new(value = function(a) a * 3)
 
 	expect_equal(s$ap(fab),
 							 fab$map( function(f) f(s$value) ))
 
 	expect_error(s$ap(s)) # type problem
+})
+
+test_that("Option$ap can do the lift", {
+
+	sum <-
+		function(a)
+			function(b) { a + b }
+
+
+	of <- function(o) { Some$new(o) }
+
+	sumOption <- function( fa, fb ) {
+	 	fb$ap(fa$ap(of(sum)))
+	}
+	aO <- of(3)
+	bO <- of(2)
+
+	sumOption(aO, bO)
+
+
 })
