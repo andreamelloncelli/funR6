@@ -2,3 +2,7 @@
 .Rhistory
 .RData
 .Ruserdata
+## packrat
+packrat/lib*/
+/packrat/bundles
+packrat/src
