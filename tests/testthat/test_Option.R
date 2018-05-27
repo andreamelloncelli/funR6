@@ -47,22 +47,31 @@ test_that("Option$ap", {
 	expect_error(s$ap(s)) # type problem
 })
 
-test_that("Option$ap can do the lift", {
-
+test_that("Option$ap can do the liftA2", {
+	# curried sum
 	sum <-
 		function(a)
 			function(b) { a + b }
-
-
 	of <- function(o) { Some$new(o) }
-
 	sumOption <- function( fa, fb ) {
 	 	fb$ap(fa$ap(of(sum)))
 	}
-	aO <- of(3)
-	bO <- of(2)
 
-	sumOption(aO, bO)
+	expect_equal(	sumOption(of(3), of(2)),
+								of(5) )
+})
 
+test_that("Option$ap can do the liftA3", {
+	# curried sum
+	sum <-
+		function(a)
+			function(b)
+				function(c) { a + b + c }
+	of <- function(o) { Some$new(o) }
+	sumOption <- function( fa, fb, fc ) {
+		fc$ap(fb$ap(fa$ap(of(sum))))
+	}
 
+	expect_equal(	sumOption(of(3), of(2), of(1)),
+								of(6) )
 })
