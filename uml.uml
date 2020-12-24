@@ -1,0 +1,18 @@
+@startuml
+Option <|-- Some: extends <
+Option <|-- None: extends <
+class Option {
++lift()
++clone()
+}
+class Some {
+class None {
++value: NULL
++initialize()
++map()
++flatMap()
++fold()
++ap()
++clone()
+}
+@enduml

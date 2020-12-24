@@ -44,6 +44,9 @@ Some   <- R6::R6Class(classname = "Some",
 												fold = function(f, g) {
 													g(self$value)
 												},
+												#' Option
+												#' @param fab Option<A -> B>
+												#' @return Option<B>
 												ap = function(fab) {
 													fab$map(function(f) f(self$value))
 												}
